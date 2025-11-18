@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>消防知识小助手</title>
+    <!-- Tailwind CSS v3 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- GSAP 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- 统一的 Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e63946', // 消防红
+                        secondary: '#1d3557', // 深蓝色
+                        accent: '#457b9d', // 天蓝色
+                        light: '#f1faee', // 浅灰色
+                        dark: '#1d3557', // 深灰色
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+            }
+            .bg-gradient-primary {
+                background: linear-gradient(135deg, theme('colors.primary'), #c1121f);
+            }
+            .bg-gradient-secondary {
+                background: linear-gradient(135deg, theme('colors.secondary'), #1a365d);
+            }
+            .typing-animation::after {
+                content: '|';
+                animation: blink 1s step-end infinite;
+            }
+            @keyframes blink {
+                from, to { opacity: 1; }
+                50% { opacity: 0; }
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    <!-- 顶部导航栏 -->
+    <header class="bg-gradient-primary text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-fire-extinguisher text-2xl"></i>
+                <h1 class="text-xl md:text-2xl font-bold text-shadow">消防知识小助手</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="#home" class="hover:text-light transition-colors duration-200 font-medium">首页</a></li>
+                    <li><a href="#qa" class="hover:text-light transition-colors duration-200 font-medium">知识问答</a></li>
+                    <li><a href="#guide" class="hover:text-light transition-colors duration-200 font-medium">应急指南</a></li>
+                    <li><a href="#equipment" class="hover:text-light transition-colors duration-200 font-medium">设施识别</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="flex-grow">
+        <!-- 首页/欢迎区 -->
+        <section id="home" class="py-12 md:py-20 bg-gradient-to-b from-gray-50 to-gray-100">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-6 leading-tight">
+                            掌握消防知识，<br>
+                            <span class="text-primary">守护生命安全</span>
+                        </h2>
+                        <p class="text-lg text-gray-600 mb-8">
+                            消防知识小助手为您提供专业的消防安全知识，帮助您在紧急情况下做出正确反应，保护自己和他人的生命财产安全。
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#qa" class="bg-primary hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center">
+                                <i class="fa fa-question-circle mr-2"></i> 开始问答
+                            </a>
+                            <a href="#guide" class="bg-secondary hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center">
+                                <i class="fa fa-book mr-2"></i> 查看应急指南
+                            </a>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center">
+                        <div class="relative">
+                            <div class="absolute -top-4 -left-4 w-full h-full bg-primary rounded-lg opacity-10 transform rotate-3"></div>
+                            <div class="absolute -bottom-4 -right-4 w-full h-full bg-secondary rounded-lg opacity-10 transform -rotate-3"></div>
+                            <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/1070017125453267004~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=15IVwjfacZjXzceqIIzrxGbE%2FuA%3D" 
+                                 alt="灭火器使用方法" 
+                                 class="relative z-10 rounded-lg shadow-xl w-full max-w-md object-cover h-auto">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 场景选择卡片 -->
+                <div class="mt-16 md:mt-24">
+                    <h3 class="text-2xl font-bold text-secondary mb-8 text-center">选择您所在的场景</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- 家庭场景 -->
+                        <div class="scene-card card-hover bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-primary" data-scene="home">
+                            <div class="p-6">
+                                <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fa fa-home text-primary text-2xl"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-secondary mb-2">家庭场景</h4>
+                                <p class="text-gray-600 mb-4">了解家庭火灾预防、厨房安全、电器使用等知识</p>
+                                <button class="view-scene-btn text-primary hover:text-red-700 font-medium flex items-center">
+                                    查看相关知识 <i class="fa fa-arrow-right ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 办公室场景 -->
+                        <div class="scene-card card-hover bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-accent" data-scene="office">
+                            <div class="p-6">
+                                <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fa fa-building text-accent text-2xl"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-secondary mb-2">办公室场景</h4>
+                                <p class="text-gray-600 mb-4">学习办公室火灾逃生、电气设备安全、消防通道等知识</p>
+                                <button class="view-scene-btn text-accent hover:text-blue-700 font-medium flex items-center">
+                                    查看相关知识 <i class="fa fa-arrow-right ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 学校场景 -->
+                        <div class="scene-card card-hover bg-white rounded-xl shadow-md overflow-hidden border-t-4 border-secondary" data-scene="school">
+                            <div class="p-6">
+                                <div class="w-14 h-14 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fa fa-graduation-cap text-secondary text-2xl"></i>
+                                </div>
+                                <h4 class="text-xl font-bold text-secondary mb-2">学校场景</h4>
+                                <p class="text-gray-600 mb-4">掌握校园火灾应急疏散、实验室安全、宿舍防火等知识</p>
+                                <button class="view-scene-btn text-secondary hover:text-gray-700 font-medium flex items-center">
+                                    查看相关知识 <i class="fa fa-arrow-right ml-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 消防知识问答区 -->
+        <section id="qa" class="py-12 md:py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-secondary mb-2 text-center">消防知识问答</h2>
+                <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">输入您的问题，获取专业的消防知识解答。我们的智能系统将为您提供准确、实用的消防安全信息。</p>
+                
+                <div class="max-w-3xl mx-auto">
+                    <div class="bg-gray-50 rounded-xl shadow-md p-6 mb-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white mr-3">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <input type="text" id="question-input" placeholder="请输入您的消防问题..." 
+                                   class="flex-grow border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <button id="ask-btn" class="ml-3 bg-primary hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-300 flex items-center">
+                                <i class="fa fa-paper-plane mr-2"></i> 提问
+                            </button>
+                        </div>
+                        
+                        <div id="recent-questions" class="mt-4">
+                            <p class="text-sm text-gray-500 mb-2">热门问题:</p>
+                            <div class="flex flex-wrap gap-2">
+                                <button class="quick-question bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-1 rounded-full transition-colors duration-300">火灾报警时需要说明哪些关键信息？</button>
+                                <button class="quick-question bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-1 rounded-full transition-colors duration-300">灭火器的使用步骤是什么？</button>
+                                <button class="quick-question bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-1 rounded-full transition-colors duration-300">家庭火灾如何逃生？</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="answer-container" class="bg-white rounded-xl shadow-md p-6 hidden">
+                        <div class="flex items-start mb-4">
+                            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white mr-3 flex-shrink-0">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4 flex-grow">
+                                <p id="user-question" class="font-medium"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-secondary rounded-full flex items-center justify-center text-white mr-3 flex-shrink-0">
+                                <i class="fa fa-robot"></i>
+                            </div>
+                            <div class="bg-gray-50 rounded-lg p-4 flex-grow">
+                                <div id="typing-indicator" class="flex items-center text-gray-500 mb-2 hidden">
+                                    <span class="typing-dot"></span>
+                                    <span class="typing-dot"></span>
+                                    <span class="typing-dot"></span>
+                                    <span class="ml-2">正在思考...</span>
+                                </div>
+                                <div id="answer-content" class="prose max-w-none"></div>
+                                <div id="related-questions" class="mt-4 pt-4 border-t border-gray-200">
+                                    <p class="text-sm font-medium text-gray-700 mb-2">相关问题:</p>
+                                    <div id="related-questions-list" class="flex flex-wrap gap-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 火灾应急指南区 -->
+        <section id="guide" class="py-12 md:py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-secondary mb-2 text-center">火灾应急指南</h2>
+                <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">不同场景下的火灾逃生方法和注意事项，帮助您在紧急情况下做出正确反应。</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 家庭火灾应急指南 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/924990983283015703~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=V8AMX9RjB9y6efdieviLbTZA%2BBg%3D')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-secondary mb-3 flex items-center">
+                                <i class="fa fa-home text-primary mr-2"></i> 家庭火灾应急指南
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">油锅起火</h4>
+                                    <p class="text-gray-600 text-sm">立即关掉燃气灶开关，用干燥的锅盖从侧面平稳盖在油锅上，隔绝空气。切勿浇水！</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">燃气泄漏</h4>
+                                    <p class="text-gray-600 text-sm">严禁开关任何电器，关闭燃气总阀门，轻轻打开窗户通风，立即撤离到室外安全区域。</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">电器起火</h4>
+                                    <p class="text-gray-600 text-sm">立即拔掉插头或关闭总电源，使用干粉灭火器灭火。切勿用水灭火，以防触电。</p>
+                                </div>
+                                <button class="view-detail-btn mt-2 text-primary hover:text-red-700 font-medium flex items-center text-sm" data-target="home-detail">
+                                    查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 办公室火灾应急指南 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/1896123246839463965~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=DFQAvC61Nl5QXPOkRLRKFaI5gpM%3D')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-secondary mb-3 flex items-center">
+                                <i class="fa fa-building text-accent mr-2"></i> 办公室火灾应急指南
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">初期火灾扑救</h4>
+                                    <p class="text-gray-600 text-sm">使用就近的灭火器扑救初期火灾，按下手动报警按钮，及时疏散人员。</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">疏散逃生</h4>
+                                    <p class="text-gray-600 text-sm">沿疏散指示标志方向逃生，用湿毛巾捂住口鼻，弯腰低姿前行，切勿乘坐电梯。</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">被困自救</h4>
+                                    <p class="text-gray-600 text-sm">选择靠近窗户、通风良好的房间，关闭房门，用湿毛巾堵住门缝，等待救援。</p>
+                                </div>
+                                <button class="view-detail-btn mt-2 text-accent hover:text-blue-700 font-medium flex items-center text-sm" data-target="office-detail">
+                                    查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 公共场所火灾应急指南 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover">
+                        <div class="h-48 bg-cover bg-center" style="background-image: url('https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/999752688851222553~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=a3eIrXt8%2FnYXHhkWFUhds70lCrk%3D')"></div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-secondary mb-3 flex items-center">
+                                <i class="fa fa-users text-secondary mr-2"></i> 公共场所火灾应急指南
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">保持冷静</h4>
+                                    <p class="text-gray-600 text-sm">恐慌是火灾中最大的敌人，保持镇静，迅速观察周围环境，判断火势和疏散通道。</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">有序疏散</h4>
+                                    <p class="text-gray-600 text-sm">按照疏散指示标志方向，低姿、快速有序地撤离，不拥挤、不推搡。</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-800 mb-1">寻求救援</h4>
+                                    <p class="text-gray-600 text-sm">被困时，在窗口用色彩鲜艳的衣物挥舞，或向外抛掷软质物品，引起救援人员注意。</p>
+                                </div>
+                                <button class="view-detail-btn mt-2 text-secondary hover:text-gray-700 font-medium flex items-center text-sm" data-target="public-detail">
+                                    查看详情 <i class="fa fa-arrow-right ml-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 详细指南模态框 -->
+                <div id="guide-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+                    <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 id="modal-title" class="text-2xl font-bold text-secondary"></h3>
+                                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                                    <i class="fa fa-times text-xl"></i>
+                                </button>
+                            </div>
+                            <div id="modal-content" class="prose max-w-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 消防设施识别区 -->
+        <section id="equipment" class="py-12 md:py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-secondary mb-2 text-center">消防设施识别</h2>
+                <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">了解常见消防设施及其使用方法，掌握基本的灭火技能，提高自救能力。</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 灭火器 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-hover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fa fa-fire-extinguisher text-primary text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-secondary">灭火器</h3>
+                            </div>
+                            <div class="mb-4">
+                                <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/1837740785800314886~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=qLChR6wI5cSXZkJc7zMkCEZM9Vo%3D" 
+                                     alt="灭火器使用方法" 
+                                     class="w-full h-40 object-contain mb-3">
+                                <h4 class="font-medium text-gray-800 mb-2">使用步骤：</h4>
+                                <ol class="list-decimal list-inside text-gray-600 space-y-1 text-sm">
+                                    <li>一提：提起灭火器</li>
+                                    <li>二拔：拔掉保险销</li>
+                                    <li>三握：握住喷管</li>
+                                    <li>四压：压下把手</li>
+                                </ol>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">适用类型：</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">A类火灾</span>
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">B类火灾</span>
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">C类火灾</span>
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">E类火灾</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 消防栓 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-hover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fa fa-tint text-accent text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-secondary">消防栓</h3>
+                            </div>
+                            <div class="mb-4">
+                                <img src="https://p11-doubao-search-sign.byteimg.com/labis/1e3fdbb4d65dbdf30be38f02d28a2bc9~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=NyZvxP8AXFBxDmItNWgu3K5HIMg%3D" 
+                                     alt="消防栓" 
+                                     class="w-full h-40 object-contain mb-3">
+                                <h4 class="font-medium text-gray-800 mb-2">使用步骤：</h4>
+                                <ol class="list-decimal list-inside text-gray-600 space-y-1 text-sm">
+                                    <li>打开消火栓箱门</li>
+                                    <li>取出消防水带，展开</li>
+                                    <li>将水带一端与消火栓连接</li>
+                                    <li>另一端与水枪连接</li>
+                                    <li>打开消火栓阀门，对准火源根部喷水</li>
+                                </ol>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">注意事项：</h4>
+                                <p class="text-gray-600 text-sm">使用消防栓时需两人配合，一人持水枪，一人开水阀，注意防止水带扭转。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 消防应急照明和疏散指示标志 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-hover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fa fa-signs-post text-green-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-secondary">疏散指示标志</h3>
+                            </div>
+                            <div class="mb-4">
+                                <img src="https://p11-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/920351585380335640~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=3DeX9ex8xDFQAEfeVXb9ZOwbFcg%3D" 
+                                     alt="疏散指示标志" 
+                                     class="w-full h-40 object-contain mb-3">
+                                <h4 class="font-medium text-gray-800 mb-2">功能作用：</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                                    <li>指示疏散方向</li>
+                                    <li>引导人员安全逃生</li>
+                                    <li>在断电时提供照明</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">设置位置：</h4>
+                                <p class="text-gray-600 text-sm">疏散通道及其转角处距地面高度1米以下的墙面或地面上，保持清晰可见。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 手动火灾报警按钮 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-hover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fa fa-exclamation-triangle text-yellow-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-secondary">手动火灾报警按钮</h3>
+                            </div>
+                            <div class="mb-4">
+                                <img src="https://p11-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/2346353931051728909~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=FfCaiBaDznOi3h%2BmAq5BHeoXTJ0%3D" 
+                                     alt="手动火灾报警按钮" 
+                                     class="w-full h-40 object-contain mb-3">
+                                <h4 class="font-medium text-gray-800 mb-2">使用方法：</h4>
+                                <ol class="list-decimal list-inside text-gray-600 space-y-1 text-sm">
+                                    <li>发现火情后，击碎玻璃面板</li>
+                                    <li>按下按钮</li>
+                                    <li>系统自动向消防控制室发送报警信号</li>
+                                </ol>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">设置位置：</h4>
+                                <p class="text-gray-600 text-sm">安装在疏散通道、出入口等人员易于触及的墙面上，距地面高度约1.5米。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 防火卷帘 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-hover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fa fa-columns text-gray-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-secondary">防火卷帘</h3>
+                            </div>
+                            <div class="mb-4">
+                                <img src="https://p11-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/2340822975298797571~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=Mud4Kjy9tMPAiAXw2PKSETWTt%2Bc%3D" 
+                                     alt="防火卷帘" 
+                                     class="w-full h-40 object-contain mb-3">
+                                <h4 class="font-medium text-gray-800 mb-2">功能作用：</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                                    <li>火灾时自动或手动关闭</li>
+                                    <li>阻止火势和烟雾蔓延</li>
+                                    <li>分隔防火分区</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">注意事项：</h4>
+                                <p class="text-gray-600 text-sm">防火卷帘下方严禁堆放杂物，确保其正常运行。火灾时切勿强行通过关闭的防火卷帘。</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 消防应急广播 -->
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 card-hover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fa fa-bullhorn text-purple-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-secondary">消防应急广播</h3>
+                            </div>
+                            <div class="mb-4">
+                                <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/1033753187558490136~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1778988536&x-signature=r9rx8oOEloBHWFEUUBSBoEmBtvQ%3D" 
+                                     alt="消防应急广播" 
+                                     class="w-full h-40 object-contain mb-3">
+                                <h4 class="font-medium text-gray-800 mb-2">功能作用：</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">
+                                    <li>火灾时播放疏散指令</li>
+                                    <li>发布重要安全信息</li>
+                                    <li>引导人员有序疏散</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-800 mb-2">注意事项：</h4>
+                                <p class="text-gray-600 text-sm">听到应急广播时，保持冷静，按照广播指示行动，不要惊慌失措。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI智能推荐区 -->
+        <section id="ai-recommendation" class="py-12 md:py-20 bg-gradient-secondary text-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-2 text-center">AI智能推荐</h2>
+                <p class="text-gray-200 text-center mb-12 max-w-2xl mx-auto">根据您所在的场景和浏览历史，我们的AI系统为您推荐相关的消防知识和应急方案。</p>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 md:p-8">
+                        <div class="flex flex-col md:flex-row items-start md:items-center mb-6">
+                            <div class="w-16 h-16 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-6">
+                                <i class="fa fa-lightbulb-o text-3xl text-primary"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">个性化消防知识推荐</h3>
+                                <p class="text-gray-200">基于您的场景和兴趣，我们为您精选了以下消防知识内容：</p>
+                            </div>
+                        </div>
+                        
+                        <div id="ai-recommendations" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- 推荐内容将通过JavaScript动态生成 -->
+                        </div>
+                        
+                        <div class="mt-8 text-center">
+                            <button id="refresh-recommendations" class="bg-primary hover:bg-red-700 text-white font-medium py-2 px-6 rounded-lg shadow-md transition-all duration-300 flex items-center mx-auto">
+                                <i class="fa fa-refresh mr-2"></i> 刷新推荐
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部信息栏 -->
+    <footer class="bg-secondary text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2 mb-2">
+                        <i class="fa fa-fire-extinguisher text-xl"></i>
+                        <h2 class="text-xl font-bold">消防知识小助手</h2>
+                    </div>
+                    <p class="text-gray-300 text-sm">提供专业的消防安全知识，守护生命安全</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row md:space-x-12 items-center md:items-end">
+                    <div class="mb-4 md:mb-0">
+                        <h3 class="text-lg font-medium mb-2">联系我们</h3>
+                        <p class="text-gray-300 text-sm">
+                            <i class="fa fa-phone mr-1"></i> 火警电话：119<br>
+                            <i class="fa fa-envelope mr-1"></i> 邮箱：info@firesafety.com
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-medium mb-2">关注我们</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-white hover:text-gray-300 transition-colors duration-300">
+                                <i class="fa fa-weixin text-xl"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-gray-300 transition-colors duration-300">
+                                <i class="fa fa-weibo text-xl"></i>
+                            </a>
+                            <a href="#" class="text-white hover:text-gray-300 transition-colors duration-300">
+                                <i class="fa fa-qq text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400 text-sm">
+                <p>© 2025 消防知识小助手 版权所有 | 消防安全，人人有责</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary hover:bg-red-700 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 opacity-0 invisible">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // 消防知识问答数据
+        const fireSafetyData = {
+            "火灾报警时需要说明哪些关键信息？": {
+                "answer": "火灾报警时需要说明以下关键信息：<br>1. <strong>详细地址</strong>：包括路名、门牌号、楼层、房间号等<br>2. <strong>火势大小</strong>：说明火灾的规模和蔓延情况<br>3. <strong>燃烧物质</strong>：如木材、电器、油类等<br>4. <strong>有无人员被困</strong>：特别是老人、小孩、孕妇等特殊人群<br>5. <strong>报警人姓名和联系方式</strong>：以便消防部门进一步了解情况或回电确认",
+                "related": ["如何正确拨打119？", "火灾报警后应该做什么？", "如何描述火灾位置？"]
+            },
+            "灭火器的使用步骤是什么？": {
+                "answer": "灭火器的使用步骤可以概括为四个字：<strong>提、拔、握、压</strong>：<br>1. <strong>提</strong>：提起灭火器，迅速跑到火灾现场上风或侧上风位置<br>2. <strong>拔</strong>：拔掉保险销，使灭火器处于待发状态<br>3. <strong>握</strong>：一手握住喷管前端，对准火焰根部<br>4. <strong>压</strong>：另一手按压压把，喷出灭火剂<br><br>注意事项：<br>- 灭火时应站在上风方向<br>- 保持适当距离（一般为2-3米）<br>- 对准火焰根部喷射<br>- 由近及远，水平扫射<br>- 防止复燃",
+                "related": ["不同类型灭火器的适用范围", "灭火器的检查方法", "灭火器使用注意事项"]
+            },
+            "家庭火灾如何逃生？": {
+                "answer": "家庭火灾逃生应遵循以下原则：<br>1. <strong>保持冷静</strong>：迅速判断火势和逃生方向<br>2. <strong>湿毛巾捂口鼻</strong>：用湿毛巾或衣物捂住口鼻，弯腰低姿前行<br>3. <strong>选择正确逃生路线</strong>：优先选择疏散楼梯，切勿乘坐电梯<br>4. <strong>关闭房门</strong>：逃生时随手关闭身后的门，延缓火势蔓延<br>5. <strong>切勿贪恋财物</strong>：生命第一，不要为取财物重返火场<br>6. <strong>被困时等待救援</strong>：如无法逃生，应选择靠近窗户、通风良好的房间，用湿毛巾堵住门缝，在窗口呼救<br><br>特别提醒：身上着火时，切勿奔跑，应立即就地打滚灭火",
+                "related": ["高层住宅火灾逃生方法", "家庭火灾预防措施", "火灾逃生工具推荐"]
+            },
+            "油锅起火怎么办？": {
+                "answer": "油锅起火是家庭常见火灾，正确处理方法如下：<br>1. <strong>立即关闭火源</strong>：迅速关掉燃气灶开关，切断热量来源<br>2. <strong>用锅盖覆盖</strong>：用干燥的锅盖或湿抹布从侧面平稳盖在油锅上，隔绝空气<br>3. <strong>使用灭火毯</strong>：如有灭火毯，可直接覆盖在油锅上<br>4. <strong>放入蔬菜</strong>：如无其他工具，可缓慢倒入切好的冷蔬菜<br><br><strong>绝对禁止</strong>：<br>- 向油锅中浇水（水遇热油会飞溅，扩大火势）<br>- 用扇子等物品扇风<br>- 端起油锅移动<br><br>预防措施：烹饪时不要离开灶台，控制油温，定期清理油烟机",
+                "related": ["厨房火灾预防", "灭火毯的使用方法", "家庭消防器材配置"]
+            },
+            "电气火灾如何扑救？": {
+                "answer": "电气火灾扑救应遵循以下步骤：<br>1. <strong>切断电源</strong>：立即拔掉插头或关闭总电源开关，这是最关键的一步<br>2. <strong>使用合适灭火器</strong>：断电后，可使用干粉灭火器或二氧化碳灭火器<br>3. <strong>不能用水灭火</strong>：未断电时用水灭火可能导致触电<br>4. <strong>防止触电</strong>：灭火时不要用手直接接触电器或电线<br><br>注意事项：<br>- 如火势较大或无法接近电源开关，应立即撤离并拨打119<br>- 电视机、电脑等电器起火时，即使断电后也应等待降温后再处理，防止爆炸<br>- 发现电线冒烟、异味时，应立即断电检查<br><br>预防措施：定期检查电气线路，避免超负荷用电，使用合格电器产品",
+                "related": ["电气火灾原因分析", "家庭用电安全", "灭火器类型选择"]
+            },
+            "燃气泄漏如何处理？": {
+                "answer": "燃气泄漏是非常危险的情况，应立即采取以下措施：<br>1. <strong>严禁开关任何电器</strong>：包括灯、排风扇、油烟机、手机等，防止产生电火花<br>2. <strong>关闭燃气总阀门</strong>：顺时针拧紧总阀门，切断泄漏源<br>3. <strong>开窗通风</strong>：轻轻打开门窗，让空气流通，降低室内燃气浓度<br>4. <strong>迅速撤离</strong>：立即带领家人撤离到室外安全区域<br>5. <strong>报警求助</strong>：在室外安全处拨打燃气公司抢修电话和119<br><br><strong>绝对禁止</strong>：<br>- 在室内打电话或使用手机<br>- 开关电器或点火<br>- 穿脱化纤衣物（易产生静电）<br>- 开启排风扇或油烟机<br><br>预防措施：定期检查燃气管道、阀门、软管，安装燃气报警器",
+                "related": ["燃气安全使用常识", "燃气报警器安装位置", "燃气泄漏检测方法"]
+            },
+            "高层建筑火灾如何逃生？": {
+                "answer": "高层建筑火灾逃生难度较大，应遵循以下原则：<br>1. <strong>保持冷静</strong>：迅速判断火势和自身位置<br>2. <strong>向下疏散</strong>：优先选择疏散楼梯向下逃生，切勿乘坐电梯<br>3. <strong>做好防护</strong>：用湿毛巾捂住口鼻，弯腰低姿前行<br>4. <strong>关闭防火门</strong>：逃生时随手关闭防火门，延缓火势蔓延<br>5. <strong>无法逃生时等待救援</strong>：<br>   - 选择靠近窗户、通风良好的房间<br>   - 关闭房门，用湿毛巾堵住门缝<br>   - 在窗口呼救，可用鲜艳衣物挥舞<br>   - 切勿盲目跳楼<br><br>注意事项：<br>- 熟悉建筑内的消防设施和疏散通道<br>- 不要为取财物重返火场<br>- 身上着火时，切勿奔跑，应立即就地打滚<br><br>特别提醒：居住在高层建筑的家庭应配备逃生绳、灭火器等应急工具",
+                "related": ["高层住宅防火措施", "逃生绳使用方法", "家庭消防应急包配置"]
+            },
+            "公共场所火灾如何自救？": {
+                "answer": "公共场所火灾自救应遵循以下原则：<br>1. <strong>保持冷静</strong>：恐慌是最大的敌人，迅速观察环境<br>2. <strong>及时报警</strong>：立即拨打119，说明详细位置和火情<br>3. <strong>选择正确逃生路线</strong>：<br>   - 沿疏散指示标志方向逃生<br>   - 选择最近的安全出口<br>   - 切勿乘坐电梯<br>4. <strong>做好防护</strong>：<br>   - 用湿毛巾或衣物捂住口鼻<br>   - 弯腰低姿前行<br>   - 必要时披上浸湿的衣物<br>5. <strong>被困时等待救援</strong>：<br>   - 选择安全房间，关闭房门<br>   - 用湿毛巾堵住门缝<br>   - 在窗口呼救<br><br><strong>三忌</strong>：<br>- 忌贪恋财物<br>- 忌盲目乱跑<br>- 忌大声喊叫<br><br>预防措施：进入公共场所时，注意观察安全出口位置和疏散通道方向",
+                "related": ["商场火灾逃生方法", "电影院火灾自救", "人员密集场所消防安全"]
+            },
+            "消防通道的重要性？": {
+                "answer": "消防通道是火灾等紧急情况下人员疏散和消防救援的生命通道，其重要性体现在：<br>1. <strong>人员疏散通道</strong>：为被困人员提供安全逃生的路径<br>2. <strong>消防救援通道</strong>：便于消防车辆和人员快速到达火场<br>3. <strong>物资运输通道</strong>：保障灭火救援物资的运输<br>4. <strong>维持秩序</strong>：避免疏散时发生拥挤、踩踏等事故<br><br>消防通道的基本要求：<br>- 宽度不少于4米<br>- 保持畅通，无障碍物<br>- 设置明显的标志和照明<br>- 定期检查和维护<br><br>常见违法行为：<br>- 在消防通道内堆放杂物<br>- 占用消防通道停车<br>- 封闭或堵塞消防通道<br>- 在消防通道上设置障碍物<br><br>法律规定：占用、堵塞消防通道是违法行为，将面临行政处罚",
+                "related": ["消防通道管理规定", "小区消防通道堵塞危害", "如何举报消防通道违法行为"]
+            },
+            "如何检查灭火器是否正常？": {
+                "answer": "定期检查灭火器是确保其在火灾时正常工作的重要措施，检查内容包括：<br>1. <strong>外观检查</strong>：<br>   - 检查灭火器是否有明显变形、损坏<br>   - 检查喷嘴是否畅通，有无堵塞<br>   - 检查压把、提把是否完好<br>2. <strong>压力检查</strong>：<br>   - 查看压力表指针位置：<br>     - 绿色区域：压力正常<br>     - 红色区域：压力不足，需要充装<br>     - 黄色区域：压力过高，需要检查<br>3. <strong>有效期检查</strong>：<br>   - 检查灭火器生产日期和上次充装日期<br>   - 干粉灭火器一般有效期为8年<br>   - 二氧化碳灭火器一般有效期为12年<br>4. <strong>其他检查</strong>：<br>   - 检查保险销是否完好<br>   - 检查喷射软管是否老化、破损<br><br>检查周期：每月至少检查一次，每半年进行一次全面检查",
+                "related": ["灭火器的维护保养", "不同类型灭火器的检查方法", "灭火器的报废标准"]
+            }
+        };
+
+        // 场景相关知识
+        const sceneKnowledge = {
+            "home": {
+                "title": "家庭消防安全知识",
+                "content": `
+                    <h4 class="text-xl font-bold mb-4">家庭火灾预防措施</h4>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li>定期检查电气线路，及时更换老化、破损电线</li>
+                        <li>合理使用电器，避免在一个插座上连接多个大功率电器</li>
+                        <li>厨房用火时，应有人看管，不随意离开</li>
+                        <li>定期清理油烟机和灶台油污</li>
+                        <li>燃气使用后及时关闭阀门，定期检查燃气管道是否泄漏</li>
+                        <li>不在楼道、楼梯间堆放杂物，保持消防通道畅通</li>
+                        <li>教育儿童不玩火，将打火机、火柴等放在儿童够不到的地方</li>
+                        <li>安装烟雾报警器，定期测试其功能</li>
+                    </ul>
+                    
+                    <h4 class="text-xl font-bold mb-4">家庭消防器材配置</h4>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li>灭火器：建议选择ABC干粉灭火器，放置在厨房、客厅等易取位置</li>
+                        <li>灭火毯：主要用于扑灭油锅火，放置在厨房附近</li>
+                        <li>烟雾报警器：安装在客厅、卧室等位置，建议每层至少安装一个</li>
+                        <li>应急照明：停电时提供照明，帮助疏散</li>
+                        <li>逃生绳：高层住宅建议配备，便于紧急情况下逃生</li>
+                        <li>手电筒：用于停电时照明和呼救</li>
+                        <li>急救包：用于火灾中受伤时的初步处理</li>
+                    </ul>
+                    
+                    <h4 class="text-xl font-bold mb-4">家庭火灾应急计划</h4>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>绘制家庭平面图，标注所有可能的逃生路线</li>
+                        <li>确定家庭紧急集合点，如小区内的某个标志性建筑</li>
+                        <li>确保所有家庭成员了解火灾报警电话119的使用方法</li>
+                        <li>定期进行家庭消防演练，特别是有老人和小孩的家庭</li>
+                        <li>制作家庭应急联系卡，包括家庭成员联系方式、医疗信息等</li>
+                    </ol>
+                `
+            },
+            "office": {
+                "title": "办公室消防安全知识",
+                "content": `
+                    <h4 class="text-xl font-bold mb-4">办公室火灾预防措施</h4>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li>不私拉乱接电线，不超负荷用电</li>
+                        <li>电脑、打印机等设备使用完毕后及时关闭电源</li>
+                        <li>不在办公区域吸烟，设置专门的吸烟区</li>
+                        <li>不在办公室存放易燃易爆物品</li>
+                        <li>保持消防通道和安全出口畅通</li>
+                        <li>定期检查办公室内的消防设施，确保完好有效</li>
+                        <li>不在插座附近堆放纸张等易燃物品</li>
+                        <li>使用电暖器等设备时，保持安全距离</li>
+                    </ul>
+                    
+                    <h4 class="text-xl font-bold mb-4">办公室火灾应急处理</h4>
+                    <ol class="list-decimal list-inside space-y-2 mb-6">
+                        <li>发现火情立即按下手动火灾报警按钮</li>
+                        <li>使用就近的灭火器扑救初期火灾</li>
+                        <li>立即拨打火警电话119，说明详细位置和火情</li>
+                        <li>按照疏散指示标志方向，有序疏散</li>
+                        <li>疏散时用湿毛巾捂住口鼻，弯腰低姿前行</li>
+                        <li>疏散后在指定集合点集合，清点人数</li>
+                        <li>协助老、弱、病、残等行动不便的人员疏散</li>
+                    </ol>
+                    
+                    <h4 class="text-xl font-bold mb-4">办公室消防设施识别</h4>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>灭火器：通常放置在走廊、楼梯间等位置，注意识别不同类型灭火器的适用范围</li>
+                        <li>消防栓：一般安装在走廊墙壁上，配有水带和水枪</li>
+                        <li>手动火灾报警按钮：通常为红色，安装在走廊墙壁上</li>
+                        <li>疏散指示标志：指示疏散方向，通常安装在墙壁下方</li>
+                        <li>应急照明：火灾时自动启动，提供照明</li>
+                        <li>防火门：具有防火隔烟作用，平时应保持关闭状态</li>
+                    </ul>
+                `
+            },
+            "school": {
+                "title": "学校消防安全知识",
+                "content": `
+                    <h4 class="text-xl font-bold mb-4">校园火灾预防措施</h4>
+                    <ul class="list-disc list-inside space-y-2 mb-6">
+                        <li>加强消防安全教育，提高师生消防安全意识</li>
+                        <li>定期组织消防演练，提高应急处置能力</li>
+                        <li>保持教学楼、宿舍楼等场所的疏散通道畅通</li>
+                        <li>宿舍内严禁使用大功率电器，如电炉、电热杯等</li>
+                        <li>宿舍内严禁私拉乱接电线，严禁卧床吸烟</li>
+                        <li>实验室严格遵守操作规程，正确使用化学药品</li>
+                        <li>定期检查校园内的消防设施，确保完好有效</li>
+                        <li>食堂厨房定期清理油烟管道，防止油污积聚引发火灾</li>
+                    </ul>
+                    
+                    <h4 class="text-xl font-bold mb-4">校园火灾应急疏散</h4>
+                    <ol class="list-decimal list-inside space-y-2 mb-6">
+                        <li>听到火灾警报后，保持冷静，按照预定路线有序疏散</li>
+                        <li>疏散时用湿毛巾捂住口鼻，弯腰低姿前行</li>
+                        <li>不拥挤、不推搡，防止发生踩踏事故</li>
+                        <li>教学楼疏散时，应按照"先下层后上层"的原则</li>
+                        <li>疏散后在指定集合点集合，由班主任或老师清点人数</li>
+                        <li>被困时，应选择安全房间等待救援，切勿盲目跳楼</li>
+                        <li>学生干部和志愿者应协助老师组织疏散</li>
+                    </ol>
+                    
+                    <h4 class="text-xl font-bold mb-4">实验室消防安全</h4>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>严格遵守实验室操作规程，不擅自改变实验方案</li>
+                        <li>了解实验所用化学药品的性质和安全注意事项</li>
+                        <li>易燃易爆物品应分类存放，远离火源</li>
+                        <li>实验过程中不得擅自离开岗位</li>
+                        <li>熟悉实验室灭火器材的位置和使用方法</li>
+                        <li>实验结束后，及时清理实验场地，关闭电源、气源</li>
+                        <li>发现安全隐患，立即报告老师</li>
+                    </ul>
+                `
+            }
+        };
+
+        // 应急指南详细内容
+        const guideDetails = {
+            "home-detail": {
+                "title": "家庭火灾应急指南（详细版）",
+                "content": `
+                    <h4 class="text-xl font-bold mb-3">一、厨房火灾应急处理</h4>
+                    <h5 class="font-bold mb-2">1. 油锅起火</h5>
+                    <p class="mb-3">油锅起火是家庭最常见的火灾类型，正确处理方法如下：</p>
+                    <ol class="list-decimal list-inside space-y-1 mb-4">
+                        <li>立即关掉燃气灶开关，切断热量来源</li>
+                        <li>用干燥的锅盖或湿抹布从侧面平稳盖在油锅上，隔绝空气</li>
+                        <li>如果火势较大，可使用灭火毯覆盖</li>
+                        <li>也可缓慢倒入切好的冷蔬菜（注意不要溅油）</li>
+                    </ol>
+                    <p class="text-red-600 font-medium mb-4">绝对禁止：向油锅中浇水、用扇子扇风、端起油锅移动</p>
+                    
+                    <h5 class="font-bold mb-2">2. 燃气泄漏</h5>
+                    <p class="mb-3">燃气泄漏是非常危险的情况，应立即采取以下措施：</p>
+                    <ol class="list-decimal list-inside space-y-1 mb-4">
+                        <li>严禁开关任何电器，包括灯、排风扇、油烟机、手机等</li>
+                        <li>关闭燃气总阀门，顺时针拧紧</li>
+                        <li>轻轻打开窗户通风，不要打开油烟机或排风扇</li>
+                        <li>立即带领家人撤离到室外安全区域</li>
+                        <li>在室外安全处拨打燃气公司抢修电话和119</li>
+                    </ol>
+                    <p class="text-red-600 font-medium mb-4">绝对禁止：在室内打电话、开关电器、点火、穿脱化纤衣物</p>
+                    
+                    <h4 class="text-xl font-bold mb-3">二、电器火灾应急处理</h4>
+                    <p class="mb-3">电器火灾具有一定的特殊性，处理不当可能导致触电事故：</p>
+                    <ol class="list-decimal list-inside space-y-1 mb-4">
+                        <li>立即拔掉起火电器的插头或关闭总电源开关</li>
+                        <li>如果火势较小，可使用干粉灭火器灭火</li>
+                        <li>切勿用水灭火，以防触电</li>
+                        <li>如果火势较大或无法靠近电源开关，应立即撤离</li>
+                    </ol>
+                    <p class="mb-4">注意事项：电视机、电脑等电器起火时，即使断电后也应等待降温后再处理，防止爆炸。</p>
+                    
+                    <h4 class="text-xl font-bold mb-3">三、家庭火灾逃生方法</h4>
+                    <ol class="list-decimal list-inside space-y-1 mb-4">
+                        <li>保持冷静，迅速判断火势和逃生方向</li>
+                        <li>用湿毛巾或衣物捂住口鼻，弯腰低姿前行</li>
+                        <li>优先选择疏散楼梯，切勿乘坐电梯</li>
+                        <li>逃生时随手关闭身后的门，延缓火势蔓延</li>
+                        <li>切勿贪恋财物，生命第一</li>
+                        <li>如果身上着火，应立即就地打滚，压灭火焰</li>
+                    </ol>
+                    
+                    <h4 class="text-xl font-bold mb-3">四、高层住宅火灾逃生特别注意事项</h4>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>如火势不大且楼梯间无烟雾，可沿楼梯疏散</li>
+                        <li>如楼梯间充满烟雾，应返回室内等待救援</li>
+                        <li>选择靠近窗户、通风良好的房间</li>
+                        <li>关闭房门，用湿毛巾堵住门缝</li>
+                        <li>在窗口呼救，可用鲜艳衣物挥舞</li>
+                        <li>切勿盲目跳楼，除非有专业救援设备</li>
+                    </ul>
+                `
+            },
+            "office-detail": {
+                "title": "办公室火灾应急指南（详细版）",
+                "content": `
+                    <h4 class="text-xl font-bold mb-3">一、办公室火灾初期处理</h4>
+                    <p class="mb-3">发现火情后，应立即采取以下措施：</p>
+                    <ol class="list-decimal list-inside space-y-1 mb-4">
+                        <li>按下手动火灾报警按钮，发出火灾警报</li>
+                        <li>使用就近的灭火器扑救初期火灾</li>
+                        <li>立即拨打火警电话119，说明详细位置和火情</li>
+                        <li>通知周围同事，组织疏散</li>
+                    </ol>
+                    
+                    <h4 class="text-xl font-bold mb-3">二、办公室火灾疏散逃生</h4>
+                    <p class="mb-3">疏散时应遵循以下原则：</p>
+                    <ol class="list-decimal list-inside space-y-1 mb-4">
+                        <li>保持冷静，按照疏散指示标志方向逃生</li>
+                        <li>用湿毛巾或衣物捂住口鼻，弯腰低姿前行</li>
+                        <li>优先选择疏散楼梯，切勿乘坐电梯</li>
+                        <li>疏散时有序进行，不拥挤、不推搡</li>
+                        <li>随手关闭身后的防火门，延缓火势蔓延</li>
+                        <li>疏散后在指定集合点集合，清点人数</li>
+                    </ol>
+                    
+                    <h4 class="text-xl font-bold mb-3">三、被困时的自救方法</h4>
+                    <p class="mb-3">如无法疏散，应采取以下措施等待救援：</p>
+                    <ol class="list-decimal list-inside space-y-1 mb-4">
+                        <li>选择靠近窗户、通风良好的房间</li>
+                        <li>关闭房门，用湿毛巾、衣物等堵住门缝</li>
+                        <li>在窗口呼救，可用鲜艳衣物挥舞</li>
+                        <li>使用手机等通讯设备联系外界</li>
+                        <li>切勿盲目跳楼，除非有专业救援设备</li>
+                    </ol>
+                    
+                    <h4 class="text-xl font-bold mb-3">四、办公室消防设施识别与使用</h4>
+                    <h5 class="font-bold mb-2">1. 灭火器</h5>
+                    <p class="mb-3">办公室常见的灭火器类型有：</p>
+                    <ul class="list-disc list-inside space-y-1 mb-4">
+                        <li>干粉灭火器：适用于大多数类型火灾</li>
+                        <li>二氧化碳灭火器：适用于电器、精密仪器火灾</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">2. 消防栓</h5>
+                    <p class="mb-3">消防栓通常安装在走廊墙壁上，使用方法：</p>
+                    <ol class="list-decimal list-inside space-y-1 mb-4">
+                        <li>打开消火栓箱门</li>
+                        <li>取出消防水带，展开</li>
+                        <li>将水带一端与消火栓连接</li>
+                        <li>另一端与水枪连接</li>
+                        <li>打开消火栓阀门，对准火源根部喷水</li>
+                    </ol>
+                    
+                    <h5 class="font-bold mb-2">3. 手动火灾报警按钮</h5>
+                    <p class="mb-3">通常为红色，安装在走廊墙壁上，按下后可向消防控制室发送报警信号。</p>
+                `
+            },
+            "public-detail": {
+                "title": "公共场所火灾应急指南（详细版）",
+                "content": `
+                    <h4 class="text-xl font-bold mb-3">一、公共场所火灾特点</h4>
+                    <ul class="list-disc list-inside space-y-1 mb-4">
+                        <li>人员密集，疏散难度大</li>
+                        <li>可燃物多，火势蔓延快</li>
+                        <li>烟雾浓度大，能见度低</li>
+                        <li>通道复杂，容易迷失方向</li>
+                    </ul>
+                    
+                    <h4 class="text-xl font-bold mb-3">二、公共场所火灾自救原则</h4>
+                    <h5 class="font-bold mb-2">1. 保持冷静</h5>
+                    <p class="mb-3">恐慌是火灾中最大的敌人，保持镇静，迅速观察周围环境，判断火势、烟雾方向和疏散通道位置。</p>
+                    
+                    <h5 class="font-bold mb-2">2. 及时报警</h5>
+                    <p class="mb-3">立即拨打火警电话119，清晰说明详细地址、起火部位、燃烧物和火势大小。</p>
+                    
+                    <h5 class="font-bold mb-2">3. 正确逃生</h5>
+                    <p class="mb-3">根据不同情况选择正确的逃生方法：</p>
+                    
+                    <h6 class="font-medium mb-1">场景一：身处一楼或靠近出口</h6>
+                    <ul class="list-disc list-inside space-y-1 mb-3">
+                        <li>立即朝着疏散指示标志或楼梯口方向撤离</li>
+                        <li>切勿乘坐电梯</li>
+                    </ul>
+                    
+                    <h6 class="font-medium mb-1">场景二：身处楼上，疏散通道未被完全封堵</h6>
+                    <ul class="list-disc list-inside space-y-1 mb-3">
+                        <li>撤离前，先触碰金属门把手试温</li>
+                        <li>用湿毛巾或衣物捂住口鼻</li>
+                        <li>披上浸湿的衣物或毯子</li>
+                        <li>弯腰低姿，沿墙壁向下疏散</li>
+                        <li>离开房间时，随手关闭身后的防火门</li>
+                    </ul>
+                    
+                    <h6 class="font-medium mb-1">场景三：火势封堵通道，被困室内</h6>
+                    <ul class="list-disc list-inside space-y-1 mb-4">
+                        <li>立即寻找一个适合避难的房间，如卫生间、带窗的办公室等</li>
+                        <li>关闭房门，用湿毛巾、床单等堵住门缝</li>
+                        <li>在窗口用色彩鲜艳的衣物、手电筒挥舞，引起救援人员注意</li>
+                        <li>再次拨打119，明确告知被困的精确位置</li>
+                    </ul>
+                    
+                    <h4 class="text-xl font-bold mb-3">三、公共场所火灾逃生"三忌"</h4>
+                    <ul class="list-disc list-inside space-y-1 mb-4">
+                        <li>忌贪恋财物：绝不返回火场拿取任何物品</li>
+                        <li>忌盲目乱跑：不要跟随慌乱人群盲目涌动</li>
+                        <li>忌大声喊叫：大声喊叫会吸入更多有毒烟气</li>
+                    </ul>
+                    
+                    <h4 class="text-xl font-bold mb-3">四、特殊场所火灾逃生注意事项</h4>
+                    <h5 class="font-bold mb-2">1. 商场、超市</h5>
+                    <ul class="list-disc list-inside space-y-1 mb-3">
+                        <li>熟悉商场的疏散路线图</li>
+                        <li>利用疏散楼梯逃生，避免使用自动扶梯</li>
+                        <li>如果被困，可选择结实的柜台、墙角躲避</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">2. 电影院、剧院</h5>
+                    <ul class="list-disc list-inside space-y-1 mb-3">
+                        <li>熟悉座位附近的安全出口位置</li>
+                        <li>按照应急照明指示疏散</li>
+                        <li>疏散时注意脚下台阶</li>
+                    </ul>
+                    
+                    <h5 class="font-bold mb-2">3. 酒店、宾馆</h5>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>入住后熟悉疏散通道和安全出口位置</li>
+                        <li>可将毛巾浸湿后放在门底，防止烟雾进入</li>
+                        <li>使用电梯逃生时，如电梯停运，应立即返回寻找其他逃生路线</li>
+                    </ul>
+                `
+            }
+        };
+
+        // AI推荐内容
+        const aiRecommendations = [
+            {
+                title: "家庭防火安全检查清单",
+                content: "定期进行家庭防火安全检查，及时发现并消除火灾隐患，是预防家庭火灾的重要措施。",
+                icon: "fa-check-square-o",
+                color: "text-primary"
+            },
+            {
+                title: "灭火器的选择与使用",
+                content: "不同类型的灭火器适用于不同类型的火灾，了解灭火器的选择和使用方法，关键时刻能挽救生命。",
+                icon: "fa-fire-extinguisher",
+                color: "text-accent"
+            },
+            {
+                title: "高层住宅火灾逃生技巧",
+                content: "高层住宅火灾逃生难度较大，掌握正确的逃生技巧，能在危急时刻提高生存几率。",
+                icon: "fa-building",
+                color: "text-secondary"
+            },
+            {
+                title: "电气火灾预防与处理",
+                content: "电气火灾是家庭和办公场所常见的火灾类型，了解预防措施和应急处理方法至关重要。",
+                icon: "fa-bolt",
+                color: "text-yellow-500"
+            },
+            {
+                title: "儿童消防安全教育",
+                content: "教育儿童了解火灾危险性，掌握基本的防火知识和逃生技能，是家庭安全教育的重要内容。",
+                icon: "fa-child",
+                color: "text-green-500"
+            },
+            {
+                title: "厨房消防安全指南",
+                content: "厨房是家庭火灾高发区域，了解厨房火灾预防和应急处理方法，能有效降低火灾风险。",
+                icon: "fa-cutlery",
+                color: "text-red-500"
+            }
+        ];
+
+        // DOM元素
+        const questionInput = document.getElementById('question-input');
+        const askBtn = document.getElementById('ask-btn');
+        const answerContainer = document.getElementById('answer-container');
+        const userQuestion = document.getElementById('user-question');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const answerContent = document.getElementById('answer-content');
+        const relatedQuestionsList = document.getElementById('related-questions-list');
+        const quickQuestions = document.querySelectorAll('.quick-question');
+        const viewDetailBtns = document.querySelectorAll('.view-detail-btn');
+        const guideModal = document.getElementById('guide-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const closeModal = document.getElementById('close-modal');
+        const sceneCards = document.querySelectorAll('.scene-card');
+        const viewSceneBtns = document.querySelectorAll('.view-scene-btn');
+        const aiRecommendationsContainer = document.getElementById('ai-recommendations');
+        const refreshRecommendationsBtn = document.getElementById('refresh-recommendations');
+        const backToTopBtn = document.getElementById('back-to-top');
+
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化AI推荐
+            renderRecommendations();
+            
+            // 滚动事件监听
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.remove('opacity-0', 'invisible');
+                    backToTopBtn.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTopBtn.classList.remove('opacity-100', 'visible');
+                    backToTopBtn.classList.add('opacity-0', 'invisible');
+                }
+            });
+            
+            // 返回顶部按钮点击事件
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 提问按钮点击事件
+        askBtn.addEventListener('click', function() {
+            const question = questionInput.value.trim();
+            if (question) {
+                processQuestion(question);
+            }
+        });
+
+        // 输入框回车事件
+        questionInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const question = questionInput.value.trim();
+                if (question) {
+                    processQuestion(question);
+                }
+            }
+        });
+
+        // 快速问题点击事件
+        quickQuestions.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const question = this.textContent;
+                questionInput.value = question;
+                processQuestion(question);
+            });
+        });
+
+        // 处理问题
+        function processQuestion(question) {
+            // 显示用户问题
+            userQuestion.textContent = question;
+            
+            // 显示回答容器和正在输入指示器
+            answerContainer.classList.remove('hidden');
+            typingIndicator.classList.remove('hidden');
+            answerContent.innerHTML = '';
+            relatedQuestionsList.innerHTML = '';
+            
+            // 滚动到回答区域
+            answerContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // 模拟AI思考时间
+            setTimeout(() => {
+                // 隐藏正在输入指示器
+                typingIndicator.classList.add('hidden');
+                
+                // 查找答案
+                let answer = '';
+                let related = [];
+                
+                // 检查是否有预设答案
+                if (fireSafetyData[question]) {
+                    answer = fireSafetyData[question].answer;
+                    related = fireSafetyData[question].related;
+                } else {
+                    // 关键词匹配
+                    let matched = false;
+                    for (const key in fireSafetyData) {
+                        if (key.includes(question) || question.includes(key)) {
+                            answer = fireSafetyData[key].answer;
+                            related = fireSafetyData[key].related;
+                            matched = true;
+                            break;
+                        }
+                    }
+                    
+                    // 如果没有匹配到，提供通用回答
+                    if (!matched) {
+                        answer = `<p>感谢您的提问。关于"${question}"，我建议您：</p>
+                                  <ol class="list-decimal list-inside space-y-1">
+                                      <li>拨打当地消防部门电话咨询专业意见</li>
+                                      <li>查阅相关消防安全手册或指南</li>
+                                      <li>参加消防安全培训课程</li>
+                                  </ol>
+                                  <p class="mt-2">您也可以尝试更换关键词，或者查看我们的消防知识问答库获取更多信息。</p>`;
+                    }
+                }
+                
+                // 显示答案（打字机效果）
+                typeWriter(answerContent, answer, 20);
+                
+                // 显示相关问题
+                if (related.length > 0) {
+                    related.forEach(relQuestion => {
+                        const btn = document.createElement('button');
+                        btn.className = 'quick-question bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm px-3 py-1 rounded-full transition-colors duration-300';
+                        btn.textContent = relQuestion;
+                        btn.addEventListener('click', function() {
+                            questionInput.value = relQuestion;
+                            processQuestion(relQuestion);
+                        });
+                        relatedQuestionsList.appendChild(btn);
+                    });
+                } else {
+                    document.getElementById('related-questions').classList.add('hidden');
+                }
+                
+            }, 1500);
+        }
+
+        // 打字机效果
+        function typeWriter(element, text, speed) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    // 检查是否是HTML标签
+                    if (text.charAt(i) === '<') {
+                        // 找到标签结束位置
+                        const endTagIndex = text.indexOf('>', i);
+                        if (endTagIndex !== -1) {
+                            element.innerHTML += text.substring(i, endTagIndex + 1);
+                            i = endTagIndex + 1;
+                        } else {
+                            element.innerHTML += text.charAt(i);
+                            i++;
+                        }
+                    } else {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                    }
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // 查看详情按钮点击事件
+        viewDetailBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                if (guideDetails[target]) {
+                    modalTitle.textContent = guideDetails[target].title;
+                    modalContent.innerHTML = guideDetails[target].content;
+                    guideModal.classList.remove('hidden');
+                }
+            });
+        });
+
+        // 关闭模态框
+        closeModal.addEventListener('click', function() {
+            guideModal.classList.add('hidden');
+        });
+
+        // 点击模态框外部关闭
+        guideModal.addEventListener('click', function(e) {
+            if (e.target === guideModal) {
+                guideModal.classList.add('hidden');
+            }
+        });
+
+        // 场景卡片点击事件
+        sceneCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const scene = this.getAttribute('data-scene');
+                showSceneKnowledge(scene);
+            });
+        });
+
+        // 查看场景知识按钮点击事件
+        viewSceneBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const scene = this.closest('.scene-card').getAttribute('data-scene');
+                showSceneKnowledge(scene);
+            });
+        });
+
+        // 显示场景知识
+        function showSceneKnowledge(scene) {
+            if (sceneKnowledge[scene]) {
+                modalTitle.textContent = sceneKnowledge[scene].title;
+                modalContent.innerHTML = sceneKnowledge[scene].content;
+                guideModal.classList.remove('hidden');
+            }
+        }
+
+        // 渲染AI推荐
+        function renderRecommendations() {
+            aiRecommendationsContainer.innerHTML = '';
+            
+            // 随机选择4个推荐
+            const shuffled = [...aiRecommendations].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 4);
+            
+            selected.forEach(rec => {
+                const card = document.createElement('div');
+                card.className = 'bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-4 hover:bg-opacity-20 transition-all duration-300';
+                card.innerHTML = `
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 rounded-full bg-white bg-opacity-20 flex items-center justify-center mr-3 flex-shrink-0">
+                            <i class="fa ${rec.icon} ${rec.color}"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-1">${rec.title}</h4>
+                            <p class="text-gray-200 text-sm">${rec.content}</p>
+                        </div>
+                    </div>
+                `;
+                aiRecommendationsContainer.appendChild(card);
+            });
+        }
+
+        // 刷新推荐按钮点击事件
+        refreshRecommendationsBtn.addEventListener('click', function() {
+            // 添加旋转动画
+            const icon = this.querySelector('i');
+            icon.classList.add('fa-spin');
+            
+            // 重新渲染推荐
+            setTimeout(() => {
+                renderRecommendations();
+                icon.classList.remove('fa-spin');
+            }, 1000);
+        });
+
+        // 添加打字机效果样式
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .typing-dot {
+                    display: inline-block;
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background-color: #666;
+                    margin: 0 2px;
+                    opacity: 0.6;
+                    animation: typingAnimation 1.4s infinite both;
+                }
+                
+                .typing-dot:nth-child(2) {
+                    animation-delay: 0.2s;
+                }
+                
+                .typing-dot:nth-child(3) {
+                    animation-delay: 0.4s;
+                }
+                
+                @keyframes typingAnimation {
+                    0% { transform: translateY(0); }
+                    50% { transform: translateY(-5px); }
+                    100% { transform: translateY(0); }
+                }
+            </style>
+        `);
+    </script>
+</body>
+</html>
